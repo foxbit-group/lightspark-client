@@ -1,7 +1,3 @@
-#### CARD (JIRA)
-
-- [{{BOARD}}-{{TASK}}](https://foxbit.atlassian.net/browse/{{BOARD}}-{{NUMERO}})
-
 <details open>
   <summary>
     <b>Feature (descrever funcionalidade e motivação)</b>
