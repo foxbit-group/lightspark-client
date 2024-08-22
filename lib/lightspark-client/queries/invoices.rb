@@ -54,7 +54,9 @@ module LightsparkClient
 
         variables = { id: id }.compact
 
-        request({ query: query, variables: variables })
+        response = request({ query: query, variables: variables })
+
+        raise LightsparkClient::Errors::ClientError, "Invoice not found" if response["entity"].nil?
       end
 
       # this method is deprecated, used only for compatibility
