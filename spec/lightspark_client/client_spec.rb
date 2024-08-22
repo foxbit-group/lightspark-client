@@ -60,7 +60,7 @@ RSpec.describe LightsparkClient::Client do
         expect(a_request(:post, "https://api.lightspark.com/graphql/server/2023-09-13").with(
           headers: {
             "Content-Type" => "application/json",
-            "Authorization" => "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=\n"
+            "Authorization" => "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ="
           }
         )).to have_been_made.once
       end
