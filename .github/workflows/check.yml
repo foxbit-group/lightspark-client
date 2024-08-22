@@ -13,7 +13,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     container:
-      image: ruby:2.7.6
+      image: ruby:2.6.6
       env:
         BUNDLE_JOBS: 3
         BUNDLE_RETRY: 3
