@@ -22,6 +22,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Update Rubygems
+        run: |
+          gem update --system 3.3.22
+
       - name: Which bundler?
         run: |
           bundle -v
