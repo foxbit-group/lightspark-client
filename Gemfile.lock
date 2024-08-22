@@ -112,7 +112,6 @@ DEPENDENCIES
   bundler (~> 1.16)
   byebug (~> 10.0)
   lightspark-client!
-  pry (~> 0.14)
   pry-byebug (<= 3.6)
   rake (~> 12.3.3)
   rspec (~> 3.8)
@@ -122,4 +121,4 @@ DEPENDENCIES
   webmock (~> 3.5)
 
 BUNDLED WITH
-   1.17.3
+   1.17.2
