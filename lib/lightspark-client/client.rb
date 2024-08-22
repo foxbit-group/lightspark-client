@@ -41,7 +41,7 @@ module LightsparkClient
     end
 
     def request_headers
-      token = Base64.encode64("#{@client_id}:#{@client_secret}")
+      token = Base64.encode64("#{@client_id}:#{@client_secret}").gsub("\n", "")
 
       {
         "Content-Type" => "application/json",
