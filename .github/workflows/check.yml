@@ -22,6 +22,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Update Rubygems
+        run: |
+          gem update --system 3.3.22
+
+      - name: Install Bundler 1.17.3
+        run: |
+          gem install bundler -v '1.17.3'
+
+      - name: Install ffi
+        run: |
+          gem install ffi -v '1.17.0'
+
       - name: Which bundler?
         run: |
           bundle -v
@@ -35,10 +47,10 @@ jobs:
 
       - name: Bundle Install
         run: |
-          bundle check || bundle install
+          bundle _1.17.3_ install
 
       - name: Rubocop
-        run: bundle exec rubocop --require rubocop-rspec
+        run: bundle exec rubocop
 
       - name: Run rspec
         run: |
