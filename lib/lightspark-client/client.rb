@@ -84,7 +84,7 @@ module LightsparkClient
 
       log("Request failed with status: #{response.code}. Message: #{message}", :error)
 
-      raise LightsparkClient::Errors::RequestError, message
+      raise LightsparkClient::Errors::ClientError, message
     end
 
     def handle_errors(body)
@@ -94,7 +94,7 @@ module LightsparkClient
 
       log("Request failed with errors: #{message}", :error)
 
-      raise LightsparkClient::Errors::RequestError, message
+      raise LightsparkClient::Errors::ClientError, message
     end
   end
 end

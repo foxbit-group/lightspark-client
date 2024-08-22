@@ -2,6 +2,6 @@
 
 module LightsparkClient
   module Errors
-    class RequestError < StandardError; end
+    class ClientError < StandardError; end
   end
 end
