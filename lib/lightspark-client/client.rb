@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 module LightsparkClient
-  class Base
+  class Client
+    include LightsparkClient::Mutations::Invoice
+    include LightsparkClient::Queries::Invoice
+    include LightsparkClient::Queries::Transaction
+
     DEFAULT_API_URL = "https://api.lightspark.com/graphql/server/2023-09-13"
     DEFAULT_ERROR_MESSAGE = "An error occurred while processing the request"
     LIGHTSPARTK_ERRORS = {
