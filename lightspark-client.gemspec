@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "typhoeus",    "~> 1.3"
   spec.add_dependency "base64",      "~> 0.2"
-  spec.add_dependency "json",        "~> 2.3"
 
   spec.add_development_dependency "bundler",        "~> 1.16"
   spec.add_development_dependency "byebug",         "~> 10.0"
