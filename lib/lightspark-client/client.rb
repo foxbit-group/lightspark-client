@@ -58,7 +58,7 @@ module LightsparkClient
     def handle_response(response)
       handle_status(response)
 
-      response_body = JSON.parse(response.body)
+      response_body = parse_response_body(response)
 
       handle_errors(response_body)
 
@@ -89,6 +89,12 @@ module LightsparkClient
       log("Request failed with errors: #{message}", :error)
 
       raise LightsparkClient::Errors::ClientError, message
+    end
+
+    def parse_response_body(response)
+      JSON.parse(response.body)
+    rescue StandardError
+      raise LightsparkClient::Errors::ClientError, "An error occurred while parsing the response"
     end
   end
 end
