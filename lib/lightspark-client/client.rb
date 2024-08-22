@@ -18,6 +18,9 @@ module LightsparkClient
       "429": "Your account sent too many requests in a short period of time and was rate limited.",
       "5xx": "The server is experiencing a problem. Please try again later."
     }
+    LOGGER_TAG = "LightsparkClient"
+
+    attr_reader :client_id, :client_secret, :api_url, :logger
 
     def initialize(client_id:, client_secret:, api_url: DEFAULT_API_URL, logger: nil)
       @client_id = client_id
@@ -29,11 +32,11 @@ module LightsparkClient
     private
 
     def request(payload)
-      write_log("Requesting Lightspark API")
-      write_log("Payload: #{payload}")
+      log("Requesting Lightspark API")
+      log("Payload: #{payload}")
 
       reponse = Typhoeus.post(
-        @api_url,
+        api_url,
         body: payload.to_json,
         headers: request_headers
       )
@@ -42,7 +45,7 @@ module LightsparkClient
     end
 
     def request_headers
-      token = Base64.encode64("#{@client_id}:#{@client_secret}")
+      token = Base64.encode64("#{client_id}:#{client_secret}")
 
       {
         "Authorization" => "Basic #{token}",
@@ -50,10 +53,12 @@ module LightsparkClient
       }
     end
 
-    def write_log(message, level = :info)
-      return unless @logger && @looger.respond_to?(:write_log)
-
-      @logger.send(:write_log, message, level: level)
+    def log(message, level = :info)
+      if logger && looger.respond_to?(:tagged) && logger.respond_to?(level)
+        logger.send(:tagged, LOGGER_TAG) { logger.send(level, message) }
+      else
+        puts "[#{LOGGER_TAG}] #{message}"
+      end
     end
 
     def handle_response(response)
@@ -62,6 +67,8 @@ module LightsparkClient
       response_body = JSON.parse(response.body)
 
       handle_errors(response_body)
+
+      log("Request to Lightspark API was successful")
 
       response_body["data"]
     end
@@ -75,14 +82,19 @@ module LightsparkClient
       message = LIGHTSPARK_ERRORS[status.to_s]
       message ||= DEFAULT_ERROR_MESSAGE
 
-      raise LightsparkClient::Exception, message
+      log("Request failed with status: #{response.code}. Message: #{message}", :error)
+
+      raise LightsparkClient::Errors::RequestError, message
     end
 
     def handle_errors(body)
       return if body["errors"].nil? || body["errors"].empty?
 
       message = body["errors"].map { |error| error["message"] }.join(", ")
-      raise LightsparkClient::Exception, message
+
+      log("Request failed with errors: #{message}", :error)
+
+      raise LightsparkClient::Errors::RequestError, message
     end
   end
 end
