@@ -46,7 +46,7 @@ jobs:
           bundle _1.17.3_ install
 
       - name: Rubocop
-        run: bundle exec rubocop --require rubocop-rspec
+        run: bundle exec rubocop
 
       - name: Run rspec
         run: |
