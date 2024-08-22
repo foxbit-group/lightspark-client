@@ -18,8 +18,6 @@ module LightsparkClient
     }
     LOGGER_TAG = "LightsparkClient"
 
-    attr_reader :client_id, :client_secret, :api_url, :logger
-
     def initialize(client_id:, client_secret:, api_url: DEFAULT_API_URL, logger: nil)
       @client_id = client_id
       @client_secret = client_secret
@@ -34,7 +32,7 @@ module LightsparkClient
       log("Payload: #{payload}")
 
       response = Typhoeus.post(
-        api_url,
+        @api_url,
         body: payload.to_json,
         headers: request_headers
       )
@@ -43,7 +41,7 @@ module LightsparkClient
     end
 
     def request_headers
-      token = Base64.encode64("#{client_id}:#{client_secret}")
+      token = Base64.encode64("#{@client_id}:#{@client_secret}")
 
       {
         "Content-Type" => "application/json",
@@ -52,9 +50,9 @@ module LightsparkClient
     end
 
     def log(message, level = :info)
-      return unless logger && looger.respond_to?(:tagged) && logger.respond_to?(level)
+      return unless @logger && looger.respond_to?(:tagged) && @logger.respond_to?(level)
 
-      logger.send(:tagged, LOGGER_TAG) { logger.send(level, message) }
+      @logger.send(:tagged, LOGGER_TAG) { @logger.send(level, message) }
     end
 
     def handle_response(response)
