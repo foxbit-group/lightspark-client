@@ -50,7 +50,7 @@ module LightsparkClient
     end
 
     def log(message, level = :info)
-      return unless @logger && looger.respond_to?(:tagged) && @logger.respond_to?(level)
+      return unless @logger && @logger.respond_to?(:tagged) && @logger.respond_to?(level)
 
       @logger.send(:tagged, LOGGER_TAG) { @logger.send(level, message) }
     end
