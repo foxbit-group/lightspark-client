@@ -40,7 +40,11 @@ module LightsparkClient
           expiry_secs: expiry_secs
         }.compact
 
-        request({ query: mutation, variables: variables })
+        response = request({ query: mutation, variables: variables })
+
+        raise LightsparkClient::Errors::ClientError, "Invoice not created" if response.dig("create_invoice", "invoice").nil? || response.dig("create_invoice", "invoice").empty?
+
+        response.dig("create_invoice", "invoice")
       end
     end
   end

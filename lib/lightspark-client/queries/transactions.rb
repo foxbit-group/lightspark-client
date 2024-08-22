@@ -59,6 +59,8 @@ module LightsparkClient
         response = request({ query: query, variables: variables })
 
         raise LightsparkClient::Errors::ClientError, "Transaction not found" if response["entity"].nil? || response["entity"].empty?
+
+        response["entity"]
       end
     end
   end
