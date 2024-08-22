@@ -3,7 +3,7 @@
 module LightsparkClient
   module Queries
     module Transactions
-      def get_transaciton(id: nil)
+      def get_transaction(id: nil)
         query = <<~GQL
           query GetTransaction($id: ID!) {
             entity(id: $id) {
