@@ -2,7 +2,7 @@
 
 module LightsparkClient
   module Queries
-    module Transations
+    module Transactions
       def get_transaciton(id: nil)
         query = <<~GQL
           query GetTransaction($id: ID!) {

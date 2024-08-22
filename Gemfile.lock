@@ -112,6 +112,7 @@ DEPENDENCIES
   bundler (~> 1.16)
   byebug (~> 10.0)
   lightspark-client!
+  pry (~> 0.14)
   pry-byebug (<= 3.6)
   rake (~> 12.3.3)
   rspec (~> 3.8)

@@ -2,21 +2,19 @@
 
 module LightsparkClient
   class Client
-    include LightsparkClient::Mutations::Invoice
-    include LightsparkClient::Queries::Invoice
-    include LightsparkClient::Queries::Transaction
+    include LightsparkClient::Mutations::Invoices
+    include LightsparkClient::Queries::Invoices
+    include LightsparkClient::Queries::Transactions
 
     DEFAULT_API_URL = "https://api.lightspark.com/graphql/server/2023-09-13"
     DEFAULT_ERROR_MESSAGE = "An error occurred while processing the request"
-    LIGHTSPARTK_ERRORS = {
-      "400": "You may have malformed your GraphQL request (for example, forgot to include the query field in the \
-              payload)",
-      "401": "The token/token_id pair is not valid and we cannot authenticate your account in the request.",
-      "402": "Your account might be on hold because of billing issues, or you are trying to use a feature that \
-              is not in your plan.",
-      "403": "Your account might be on hold because of suspicious activity.",
-      "429": "Your account sent too many requests in a short period of time and was rate limited.",
-      "5xx": "The server is experiencing a problem. Please try again later."
+    LIGHTSPARK_ERRORS = {
+      "400" => "You may have malformed your GraphQL request (for example, forgot to include the query field in the payload)",
+      "401" => "The token/token_id pair is not valid and we cannot authenticate your account in the request.",
+      "402" => "Your account might be on hold because of billing issues, or you are trying to use a feature that is not in your plan.",
+      "403" => "Your account might be on hold because of suspicious activity.",
+      "429" => "Your account sent too many requests in a short period of time and was rate limited.",
+      "5xx" => "The server is experiencing a problem. Please try again later."
     }
     LOGGER_TAG = "LightsparkClient"
 
@@ -35,7 +33,7 @@ module LightsparkClient
       log("Requesting Lightspark API")
       log("Payload: #{payload}")
 
-      reponse = Typhoeus.post(
+      response = Typhoeus.post(
         api_url,
         body: payload.to_json,
         headers: request_headers
@@ -48,17 +46,15 @@ module LightsparkClient
       token = Base64.encode64("#{client_id}:#{client_secret}")
 
       {
+        "Content-Type" => "application/json",
         "Authorization" => "Basic #{token}",
-        "Content-Type" => "application/json"
       }
     end
 
     def log(message, level = :info)
-      if logger && looger.respond_to?(:tagged) && logger.respond_to?(level)
-        logger.send(:tagged, LOGGER_TAG) { logger.send(level, message) }
-      else
-        puts "[#{LOGGER_TAG}] #{message}"
-      end
+      return unless logger && looger.respond_to?(:tagged) && logger.respond_to?(level)
+
+      logger.send(:tagged, LOGGER_TAG) { logger.send(level, message) }
     end
 
     def handle_response(response)

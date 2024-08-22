@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/foxbit-group/lightspark-client"
   spec.license       = "MIT"
 
-  spec.files         = Dir["lib/**/*"]
+  spec.files         = Dir["lib/**/**/*"]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "typhoeus",    "~> 1.3"
