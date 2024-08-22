@@ -33,5 +33,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop-github", "~> 0.10"
   spec.add_development_dependency "rubocop-rspec",  "~> 1.24"
   spec.add_development_dependency "webmock",        "~> 3.5"
-  spec.add_development_dependency "ffi",            "~> 1.11"
 end
